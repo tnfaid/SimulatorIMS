@@ -1,0 +1,53 @@
+plugins {
+    id 'org.springframework.boot' version '2.1.7.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'java'
+}
+
+sourceCompatibility = '11'
+
+def jarBaseName         = 'agent_simulator_imitra'
+def jarVersion          = '0.0.1'
+def distributionFolder  = 'agent_simulator_imitra'
+def configFiles         = [
+        'logback.xml',
+        'application.properties',
+        'agent_simulator_imitra.sh'] as Set
+
+bootJar {
+    baseName            = jarBaseName
+    version             = jarVersion
+    exclude 'agent_simulator_imitra.sh', 'logback.xml'
+}
+
+task copyFilesToPackage(type: Copy) {
+    from('src/main/resources') {
+        include configFiles
+    }
+    from 'build/libs/'+jarBaseName+'-'+jarVersion+'.jar'
+    into 'build/'+distributionFolder
+}
+
+
+task zipPackage(type: Zip, dependsOn: 'copyFilesToPackage') {
+    from 'build/'+distributionFolder
+    baseName distributionFolder
+}
+
+
+build.dependsOn zipPackage
+zipPackage.mustRunAfter check
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    compile 'mysql:mysql-connector-java'
+    compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.9.8'
+
+}
