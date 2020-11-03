@@ -1,6 +1,7 @@
 package com.firstwap.ImitraAgentSimulatorV2.Mapper;
 
-public class mt_data {
+public class Mt_data
+{
 
     String username;
     String password;
@@ -8,15 +9,13 @@ public class mt_data {
     String msisdn;
     String message;
 
-    public mt_data(String username, String password, String msisdn_sender, String msisdn, String message) {
+    public Mt_data( String username, String password, String msisdn_sender, String msisdn, String message) {
         this.username = username;
         this.password = password;
         this.msisdn_sender = msisdn_sender;
         this.msisdn = msisdn;
         this.message = message;
     }
-
-
 
     public String getUsername() {
         return username;

@@ -2,8 +2,9 @@ package com.firstwap.ImitraAgentSimulatorV2.Mapper;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlText;
 
-@JacksonXmlRootElement(localName = "mt_data")
+@JacksonXmlRootElement(localName = "Mt_data")
 public final class MessageEntity {
 
     @JacksonXmlProperty(localName = "username", isAttribute = true)
