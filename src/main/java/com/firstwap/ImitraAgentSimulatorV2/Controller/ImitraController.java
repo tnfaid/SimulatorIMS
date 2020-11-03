@@ -39,6 +39,9 @@ public class ImitraController {
     @Value("${count.status.message}")
     String count;
 
+    @Autowired
+    IDataRepository repository;
+
     Logger log = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping(value = "/sendsms", method = RequestMethod.POST, consumes = {"text/xml"}, produces = {"application/xml"})
@@ -61,8 +64,9 @@ public class ImitraController {
 
         log.info("Param : {}", postRequestMessage);
 
-        String AgentMessageID = randomSessionID();
+        String agentMessageID = randomSessionID();
         MessageData messageData = new MessageData(
+                agentMessageID,
                 username,
                 password,
                 msisdn,
@@ -76,7 +80,8 @@ public class ImitraController {
 
         if (ackstatus.equals("6801"))
         {
-            response = ackstatus + " | BALANCE:" + balance + " | COUNT:" + count + " | TRANSACTIONID:" + AgentMessageID;
+            response = ackstatus + " | BALANCE:" + balance + " | COUNT:" + count + " | TRANSACTIONID:" + agentMessageID;
+            repository.insertDeliveryStatus(messageData);
         }
         else if(ackstatus.equals("6805"))
         {

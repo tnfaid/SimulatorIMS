@@ -28,12 +28,14 @@ public class MessageData {
     public MessageData() {
     }
 
-    public MessageData(String username,
+    public MessageData(String agentMessageId,
+                       String username,
                        String password,
                        String msisdn,
                        String msisdnSender,
                        String message) {
 
+        this.agentMessageId = agentMessageId;
         this.username = username;
         this.password = password;
         this.msisdn = msisdn;
